@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IN-OUT SYSTEM FOR VOLUNTEER</title>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+  <style>
+    .panel {
+      border: 2px solid #ccc; /* Light gray border */
+      padding: 20px;
+      border-radius: 5px;
+      height: 100%; /* Ensures equal height for both panels */
+    }
+    .header {
+      text-align: center;
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .row {
+      display: flex;
+      align-items: stretch; /* Ensures both panels align evenly */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="header">IN-OUT SYSTEM FOR VOLUNTEER </div>
+    <div class="row">
+      <!-- Left Panel -->
+      <div class="col-md-6">
+        <div class="panel">
+          <form>
+            <div class="mb-3">
+              <label for="memberId" class="form-label">Select Member ID:</label>
+              <select class="form-select" id="memberId">
+                <option selected>Select ID</option>
+                <option value="Others">Others</option>
+                <option value="Nalanda">Nalanda</option>
+                <option value="Muse">Muse</option>
+                <option value="SDA">SDA</option>
+                <option value="KK">KK</option>
+                <option value="ECC">ECC</option>
+                <option value="KV">KV</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="volunteerName" class="form-label">Volunteer Name:</label>
+              <input type="text" class="form-control" id="volunteerName" placeholder="Enter Volunteer Name">
+            </div>
+            <button type="button" class="btn btn-primary">Record In-Time</button>
+            <button type="button" class="btn btn-primary">Record Out-Time</button>
+          </form>
+        </div>
+      </div>
+      <!-- Right Panel -->
+      <div class="col-md-6">
+        <div class="panel">
+          <form>
+            <div class="mb-3">
+              <label for="inTime" class="form-label">In-Time:</label>
+              <input type="text" class="form-control" id="inTime" placeholder="In-Time">
+            </div>
+            <div class="mb-3">
+              <label for="outTime" class="form-label">Out-Time:</label>
+              <input type="text" class="form-control" id="outTime" placeholder="Out-Time">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
