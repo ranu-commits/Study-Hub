@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - View Member Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .header {
+      text-align: center;
+      font-weight: bold;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .form-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .table-section {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Search Member Details</div>
+    <!-- Admin Input Section -->
+    <div class="form-section">
+      <label for="memberId" class="form-label">Enter Member Name/ID/Proof(4-Digits)</label>
+      <input type="text" class="form-control" id="memberId" placeholder="Enter Member Details">
+      <button class="btn btn-primary mt-3" onclick="fetchMemberDetails()">Search</button>
+    </div>
+    <!-- User Details Section -->
+    <div class="table-section" id="userDetails">
+      <h4 class="text-center mb-3">Member Details</h4>
+      <table class="table table-bordered">
+        <tbody>
+          <tr><th>Full Name</th><td id="fullName"></td></tr>
+          <tr><th>Date of Birth</th><td id="dob"></td></tr>
+          <tr><th>ID Proof</th><td id="idProof"></td></tr>
+          <tr><th>Sex</th><td id="sex"></td></tr>
+          <tr><th>Address</th><td id="address"></td></tr>
+          <tr><th>Landmark</th><td id="landmark"></td></tr>
+          <tr><th>Mobile Number</th><td id="mobile"></td></tr>
+          <tr><th>Alternate Number</th><td id="altNumber"></td></tr>
+          <tr><th>Email</th><td id="email"></td></tr>
+          <tr><th>Blood Group</th><td id="bloodGroup"></td></tr>
+          <tr><th>Social Work</th><td id="socialWork"></td></tr>
+          <tr><th>Member of</th><td id="memberOf"></td></tr>
+          <tr><th>Is Student</th><td id="isStudent"></td></tr>
+          <tr><th>Photo</th><td><img id="photo" src="" alt="User Photo" width="100"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- JavaScript -->
+  <script>
+    // Mock database (Replace this with actual API or database connection)
+    const users = {
+      "1001": {
+        fullName: "Jaydeep Patil",
+        dob: "1990-05-15",
+        idProof: "Aadhar Card - 1234",
+        sex: "Male",
+        address: "123 Street, City",
+        landmark: "Near Park",
+        mobile: "9876543210",
+        altNumber: "9876500000",
+        email: "joydeeppatil098@example.com",
+        bloodGroup: "O+",
+        socialWork: "Volunteering at NGO",
+        memberOf: "NALANDA",
+        isStudent: "No",
+        photo: "https://via.placeholder.com/100"
+      },
+      "1002": {
+        fullName: "Kamlesh Khande",
+        dob: "1995-09-20",
+        idProof: "Passport - 5678",
+        sex: "Male",
+        address: "456 Avenue, City",
+        landmark: "Opposite Mall",
+        mobile: "8765432109",
+        altNumber: "8765000000",
+        email: "kamleshk89@example.com",
+        bloodGroup: "A+",
+        socialWork: "Blood Donation",
+        memberOf: "ECC",
+        isStudent: "Yes",
+        photo: "https://via.placeholder.com/100"
+    },
+    "1003": {
+    fullName: "Sanjay Sharma",
+    dob: "1988-07-12",
+    idProof: "PAN Card - 4567",
+    sex: "Male",
+    address: "789 Lane, Metro City",
+    landmark: "Near Railway Station",
+    mobile: "9988776655",
+    altNumber: "9876543123",
+    email: "sanjay.sharma@example.com",
+    bloodGroup: "B+",
+    socialWork: "Teaching underprivileged children",
+    memberOf: "KK",
+    isStudent: "No",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1004": {
+    fullName: "Anjali Verma",
+    dob: "1993-11-25",
+    idProof: "Voter ID - 7890",
+    sex: "Female",
+    address: "32 Green Street, Town",
+    landmark: "Next to Hospital",
+    mobile: "9876567890",
+    altNumber: "9123456789",
+    email: "anjaliv@example.com",
+    bloodGroup: "AB-",
+    socialWork: "Animal Rescue Volunteering",
+    memberOf: "MUSE",
+    isStudent: "No",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1005": {
+    fullName: "Rahul Deshmukh",
+    dob: "1997-02-18",
+    idProof: "Driving License - DL7896",
+    sex: "Male",
+    address: "987 Industrial Area, City",
+    landmark: "Behind Police Station",
+    mobile: "9988665544",
+    altNumber: "9123451234",
+    email: "rahuld@example.com",
+    bloodGroup: "O-",
+    socialWork: "Community Cleanliness Drive",
+    memberOf: "SDA",
+    isStudent: "Yes",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1006": {
+    fullName: "Priya Gupta",
+    dob: "1996-05-05",
+    idProof: "Aadhar Card - 6543",
+    sex: "Female",
+    address: "23 Rose Villa, Hill Road",
+    landmark: "Opposite Library",
+    mobile: "8765432190",
+    altNumber: "9654321980",
+    email: "priyag@example.com",
+    bloodGroup: "A-",
+    socialWork: "Counseling for Women Empowerment",
+    memberOf: "ECC",
+    isStudent: "No",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1007": {
+    fullName: "Vikram Singh",
+    dob: "1985-08-10",
+    idProof: "Passport - 1236",
+    sex: "Male",
+    address: "101 Tech Park, IT City",
+    landmark: "Near Software Hub",
+    mobile: "9998887776",
+    altNumber: "9988776655",
+    email: "vikramsingh@example.com",
+    bloodGroup: "B-",
+    socialWork: "Free Coding Classes for Kids",
+    memberOf: "KV",
+    isStudent: "No",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1008": {
+    fullName: "Megha Rathi",
+    dob: "2000-12-22",
+    idProof: "College ID - 2020456",
+    sex: "Female",
+    address: "45 Ocean View, Beach Town",
+    landmark: "Near Lighthouse",
+    mobile: "7896541230",
+    altNumber: "7896123456",
+    email: "meghar@example.com",
+    bloodGroup: "AB+",
+    socialWork: "Environmental Awareness Programs",
+    memberOf: "OTHER",
+    isStudent: "Yes",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1009": {
+    fullName: "Arun Kumar",
+    dob: "1992-03-30",
+    idProof: "Aadhar Card - 9876",
+    sex: "Male",
+    address: "Green Valley Apartments, City",
+    landmark: "Near Shopping Mall",
+    mobile: "7894561230",
+    altNumber: "7894567890",
+    email: "arunk@example.com",
+    bloodGroup: "O+",
+    socialWork: "Organizing Charity Events",
+    memberOf: "ECC",
+    isStudent: "No",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1010": {
+    fullName: "Sneha Joshi",
+    dob: "1999-06-15",
+    idProof: "Voter ID - 3210",
+    sex: "Female",
+    address: "567 Rainbow Road, Metro City",
+    landmark: "Behind Bus Stop",
+    mobile: "9873216540",
+    altNumber: "9876543219",
+    email: "snehaj@example.com",
+    bloodGroup: "B+",
+    socialWork: "Helping in Old Age Homes",
+    memberOf: "KV",
+    isStudent: "Yes",
+    photo: "https://via.placeholder.com/100"
+  },
+  "1011": {
+    fullName: "Deepak Mehta",
+    dob: "1980-04-08",
+    idProof: "PAN Card - 6789",
+    sex: "Male",
+    address: "22 Lotus Tower, Uptown",
+    landmark: "Near Metro Station",
+    mobile: "9999998888",
+    altNumber: "9988776666",
+    email: "deepakm@example.com",
+    bloodGroup: "A+",
+    socialWork: "Donating Books to Needy Students",
+    memberOf: "NALANDA",
+    isStudent: "No",
+    photo: "https://via.placeholder.com/100"
+  }
+    };
+    function fetchMemberDetails() {
+    const inputField = document.getElementById("memberId");
+    const searchInput = inputField.value.trim().toLowerCase();
+    let user = users[searchInput]; // Search by Member ID (direct key match)
+
+    if (!user) {
+        // Search by ID Proof Number or Full Name (Case-insensitive)
+        user = Object.values(users).find(
+            u => u.idProof.toLowerCase().includes(searchInput) || u.fullName.toLowerCase().includes(searchInput)
+        );
+    }
+    if (user) {
+        document.getElementById("fullName").innerText = user.fullName;
+        document.getElementById("dob").innerText = user.dob;
+        document.getElementById("idProof").innerText = user.idProof;
+        document.getElementById("sex").innerText = user.sex;
+        document.getElementById("address").innerText = user.address;
+        document.getElementById("landmark").innerText = user.landmark;
+        document.getElementById("mobile").innerText = user.mobile;
+        document.getElementById("altNumber").innerText = user.altNumber;
+        document.getElementById("email").innerText = user.email;
+        document.getElementById("bloodGroup").innerText = user.bloodGroup;
+        document.getElementById("socialWork").innerText = user.socialWork;
+        document.getElementById("memberOf").innerText = user.memberOf;
+        document.getElementById("isStudent").innerText = user.isStudent;
+        document.getElementById("photo").src = user.photo;
+
+        document.getElementById("userDetails").style.display = "block";
+        inputField.value = ""; // Clear input field after search
+    } else {
+        alert("Member not found! Please check the Member ID, ID Proof, or Name.");
+    }
+}
+</script>
+</body>
+</html>
